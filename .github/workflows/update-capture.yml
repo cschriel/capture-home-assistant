@@ -1,0 +1,46 @@
+name: Update Checkmate Capture
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "24 5 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-capture:
+    name: Check upstream release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find latest Capture release
+        id: latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="$(gh api repos/bluewave-labs/capture/releases/latest --jq '.tag_name')"
+          version="${tag#v}"
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Update pinned Capture version
+        run: ruby scripts/update_capture_version.rb "${{ steps.latest.outputs.version }}"
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: update/checkmate-capture-${{ steps.latest.outputs.version }}
+          delete-branch: true
+          commit-message: Update Checkmate Capture to ${{ steps.latest.outputs.version }}
+          title: Update Checkmate Capture to ${{ steps.latest.outputs.version }}
+          body: |
+            Updates the Home Assistant add-on to use Checkmate Capture `${{ steps.latest.outputs.version }}`.
+
+            This was opened automatically after checking the latest upstream `bluewave-labs/capture` release. Please verify it on the actual Home Assistant Blue box, because apparently production is also the test lab now.
