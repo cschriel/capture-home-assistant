@@ -32,6 +32,10 @@ In Checkmate, open **Infrastructure**, add a server, and use:
 - Address: `http://<home-assistant-host>:59232`
 - Secret: the `api_secret` configured in this app
 
+## Contributions
+
+Improvements are welcome. If you get this working on other Home Assistant hardware, architectures, or setups, feel free to open an issue or PR with what changed. Bonus points for logs, because "works on my machine" is only a deployment strategy if the machine is mine.
+
 ## Notes
 
 - This is a personal-use repo, not an official Checkmate or Home Assistant project.

@@ -10,4 +10,6 @@ The Capture API is exposed on port `59232`.
 
 The image is built by downloading the official Checkmate Capture Linux release archive during the Home Assistant add-on build and installing the matching binary for the Home Assistant architecture.
 
+Improvements, fixes, and reports from other Home Assistant setups are welcome.
+
 Use as-is. No promises, no support contract, no commemorative plaque.

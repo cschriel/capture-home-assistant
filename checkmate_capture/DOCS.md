@@ -23,4 +23,6 @@ After the app starts, add the Home Assistant host in Checkmate Infrastructure wi
 
 This is an as-is personal-use repository, not an official Checkmate or Home Assistant integration.
 
+Improvements are welcome, especially reports from hardware that is not an Odroid Home Assistant Blue.
+
 Capture's Docker installation does not support S.M.A.R.T. monitoring. Home Assistant Supervisor isolation may also limit access to Docker/container metrics.
