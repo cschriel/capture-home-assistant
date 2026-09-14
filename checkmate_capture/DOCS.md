@@ -25,6 +25,4 @@ This is an as-is personal-use repository, not an official Checkmate or Home Assi
 
 Improvements are welcome, especially reports from hardware that is not an Odroid Home Assistant Blue.
 
-The add-on requests Home Assistant's read-only Docker API access so Capture can try to discover Supervisor-managed containers. Container visibility may still be limited by Supervisor isolation.
-
 Capture's Docker installation does not support S.M.A.R.T. monitoring. Home Assistant Supervisor isolation may also limit access to Docker/container metrics.

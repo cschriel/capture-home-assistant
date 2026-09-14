@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Remove Docker API access to keep the Home Assistant add-on warning-free.
+
 ## 0.1.3
 
 - Enable Home Assistant Docker API access so Capture can try to discover Supervisor-managed containers.
