@@ -1,7 +1,7 @@
 name: Checkmate Capture Agent
 slug: checkmate_capture
 description: Run the Checkmate Capture infrastructure monitoring agent on Home Assistant OS.
-version: 0.1.1
+version: 0.1.2
 url: https://github.com/cschriel/capture-home-assistant
 arch:
   - aarch64
