@@ -1,0 +1,28 @@
+name: Checkmate Capture Agent
+slug: checkmate_capture
+description: Run the Checkmate Capture infrastructure monitoring agent on Home Assistant OS.
+version: 0.1.0
+url: https://github.com/your-org/capture-home-assistant
+arch:
+  - aarch64
+  - amd64
+startup: services
+boot: auto
+init: false
+ports:
+  59232/tcp: 59232
+ports_description:
+  59232/tcp: Capture API
+map:
+  - type: addon_config
+    read_only: false
+  - type: homeassistant_config
+    read_only: true
+options:
+  api_secret: null
+  port: 59232
+  gin_mode: release
+schema:
+  api_secret: password
+  port: port
+  gin_mode: list(debug|release|test)
