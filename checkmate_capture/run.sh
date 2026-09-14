@@ -22,6 +22,13 @@ export API_SECRET
 export PORT="${PORT:-59232}"
 export GIN_MODE="${GIN_MODE:-release}"
 
+if [ -S /run/docker.sock ]; then
+  mkdir -p /var/run
+  ln -sf /run/docker.sock /var/run/docker.sock
+  export DOCKER_HOST="${DOCKER_HOST:-unix:///run/docker.sock}"
+  echo "Docker API socket detected at /run/docker.sock."
+fi
+
 echo "Starting Checkmate Capture on port ${PORT}."
 
 if command -v capture >/dev/null 2>&1; then

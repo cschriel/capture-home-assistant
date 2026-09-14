@@ -40,5 +40,6 @@ Improvements are welcome. If you get this working on other Home Assistant hardwa
 
 - This is a personal-use repo, not an official Checkmate or Home Assistant project.
 - The only tested target is Odroid Home Assistant Blue running Home Assistant OS.
+- The add-on requests read-only Docker API access so Capture can try to discover Supervisor-managed containers.
 - S.M.A.R.T. disk health is not expected to work from the Docker-based Home Assistant app because Capture's own docs note that S.M.A.R.T. monitoring is not supported in Docker installs.
 - Docker container monitoring from inside Home Assistant OS may be limited by Supervisor isolation.
