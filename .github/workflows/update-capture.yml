@@ -32,15 +32,44 @@ jobs:
       - name: Update pinned Capture version
         run: ruby scripts/update_capture_version.rb "${{ steps.latest.outputs.version }}"
 
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ github.token }}
-          branch: update/checkmate-capture-${{ steps.latest.outputs.version }}
-          delete-branch: true
-          commit-message: Update Checkmate Capture to ${{ steps.latest.outputs.version }}
-          title: Update Checkmate Capture to ${{ steps.latest.outputs.version }}
-          body: |
-            Updates the Home Assistant add-on to use Checkmate Capture `${{ steps.latest.outputs.version }}`.
+      - name: Check for changes
+        id: changes
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
 
-            This was opened automatically after checking the latest upstream `bluewave-labs/capture` release. Please verify it on the actual Home Assistant Blue box, because apparently production is also the test lab now.
+      - name: Commit changes
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          VERSION: ${{ steps.latest.outputs.version }}
+        run: |
+          set -euo pipefail
+          BRANCH="update/checkmate-capture-${VERSION}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "${BRANCH}"
+          git add checkmate_capture/Dockerfile checkmate_capture/config.yaml checkmate_capture/CHANGELOG.md
+          git commit -m "Update Checkmate Capture to ${VERSION}"
+          git push --force-with-lease origin "${BRANCH}"
+          echo "BRANCH=${BRANCH}" >> "$GITHUB_ENV"
+
+      - name: Open pull request
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.latest.outputs.version }}
+        run: |
+          set -euo pipefail
+          title="Update Checkmate Capture to ${VERSION}"
+          body="$(printf 'Updates the Home Assistant add-on to use Checkmate Capture `%s`.\n\nThis was opened automatically after checking the latest upstream `bluewave-labs/capture` release. Please verify it on the actual Home Assistant Blue box, because apparently production is also the test lab now.\n' "${VERSION}")"
+
+          existing_pr="$(gh pr list --head "${BRANCH}" --json number --jq '.[0].number // empty')"
+          if [ -n "${existing_pr}" ]; then
+            gh pr edit "${existing_pr}" --title "${title}" --body "${body}"
+          else
+            gh pr create --base main --head "${BRANCH}" --title "${title}" --body "${body}"
+          fi
