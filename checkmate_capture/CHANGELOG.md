@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- Document that network monitoring only sees the add-on container namespace, not real host traffic.
+
 ## 0.1.4
 
 - Remove Docker API access to keep the Home Assistant add-on warning-free.

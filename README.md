@@ -41,4 +41,5 @@ Improvements are welcome. If you get this working on other Home Assistant hardwa
 - This is a personal-use repo, not an official Checkmate or Home Assistant project.
 - The only tested target is Odroid Home Assistant Blue running Home Assistant OS.
 - S.M.A.R.T. disk health is not expected to work from the Docker-based Home Assistant app because Capture's own docs note that S.M.A.R.T. monitoring is not supported in Docker installs.
+- Network monitoring does not show real host traffic. Capture runs inside the add-on container and can only see that container's network namespace, which is about as useful for host traffic as staring at your own shoes to predict the weather.
 - Docker container monitoring from inside Home Assistant OS may be limited by Supervisor isolation.

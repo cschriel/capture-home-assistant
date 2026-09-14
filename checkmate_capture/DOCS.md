@@ -25,4 +25,8 @@ This is an as-is personal-use repository, not an official Checkmate or Home Assi
 
 Improvements are welcome, especially reports from hardware that is not an Odroid Home Assistant Blue.
 
-Capture's Docker installation does not support S.M.A.R.T. monitoring. Home Assistant Supervisor isolation may also limit access to Docker/container metrics.
+Capture's Docker installation does not support S.M.A.R.T. monitoring.
+
+Network monitoring does not show real host traffic. Capture runs inside the add-on container and can only see that container's network namespace, not the Home Assistant OS host interfaces.
+
+Home Assistant Supervisor isolation may also limit access to Docker/container metrics.
