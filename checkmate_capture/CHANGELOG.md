@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.7
+
+- Publish pre-built GHCR images with the Home Assistant builder workflow.
+- Configure the add-on to install from the signed public multi-architecture image.
+
+## 0.1.6
+
+- Add a custom AppArmor profile to improve the Home Assistant security rating.
+- Mount the add-on config directory read-only.
+
 ## 0.1.5
 
 - Document that network monitoring only sees the add-on container namespace, not real host traffic.

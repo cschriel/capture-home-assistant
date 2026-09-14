@@ -1,0 +1,36 @@
+#include <tunables/global>
+
+profile checkmate_capture flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  file,
+  network inet stream,
+  network inet6 stream,
+  signal (send) set=(kill,term,int,hup,cont),
+
+  /run.sh ix,
+  /bin/busybox ix,
+  /bin/sh ix,
+  /usr/local/bin/capture ix,
+  /usr/local/bin/** rix,
+
+  /lib/** r,
+  /usr/lib/** r,
+  /etc/** r,
+
+  /dev/null rw,
+  /dev/random r,
+  /dev/tty rw,
+  /dev/urandom r,
+
+  /proc/** r,
+  /sys/** r,
+
+  /run/** rwk,
+  /tmp/** rwk,
+
+  /data/** rw,
+  /addon_config/** r,
+  /config/** r,
+  /homeassistant_config/** r,
+}
